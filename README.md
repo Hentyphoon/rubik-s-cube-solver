@@ -4,6 +4,7 @@ Taehun Lee
 Peter Huang
 
 Overview
+
 - employ group theory to solve rubik's cube
 - convert between 3D model of cube and 3D matrix representation of it
 - use three.js, html, css to display the cube
@@ -19,6 +20,9 @@ In mathemetics, groups are defined to be some set G that conforms to certain axi
 Sources
 
 https://www.youtube.com/watch?v=zkADn-9wEgc
+
 https://www.ucl.ac.uk/~ucahmto/0007/_book/4-1-basic-definitions.html
+
 https://web.mit.edu/sp.268/www/rubik.pdf
+
 ChatGPT
