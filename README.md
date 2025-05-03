@@ -14,6 +14,7 @@ This project implements a Rubik's Cube solving algorithm based on concepts from 
 Group theory
 In mathemetics, groups are defined to be some set G that conforms to certain axioms after applying binary operations. These axioms include closure, associativity, identity element and inverse. In context of rubik's cube, the groups can be defined as different sides of the Rubik's cube, where each element in a group is different sides of the Rubik's cube. For instance, F would refer to the front side of the cube and rotating it in a clockwise direction. We can use prime(') notation to indicate counterclockwise movement such as F'.
 
+![notation](https://github.com/user-attachments/assets/9bf9081b-1705-4526-84d4-5728c745065b)
 
 Sources
 https://www.youtube.com/watch?v=zkADn-9wEgc
