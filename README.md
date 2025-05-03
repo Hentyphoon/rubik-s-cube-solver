@@ -17,6 +17,7 @@ In mathemetics, groups are defined to be some set G that conforms to certain axi
 ![notation](https://github.com/user-attachments/assets/9bf9081b-1705-4526-84d4-5728c745065b)
 
 Sources
+
 https://www.youtube.com/watch?v=zkADn-9wEgc
 https://www.ucl.ac.uk/~ucahmto/0007/_book/4-1-basic-definitions.html
 https://web.mit.edu/sp.268/www/rubik.pdf
