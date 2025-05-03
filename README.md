@@ -8,12 +8,29 @@ Overview
 - convert between 3D model of cube and 3D matrix representation of it
 - use three.js, html, css to display the cube
 
+
+Frontend: 
+- 3d cube where the user can input the colours
+- check for validity 
+- send the 3d matrix to the backend, 
+    - {
+        F : {front matrix}, 
+        B : {back matrix},
+        etc...
+    }
+- backend -> frontend set of step in rubix cube notation
+- carousel to go back and forth 
+
+
 Overview
 
 This project implements a Rubik's Cube solving algorithm based on concepts from group theory. The cube is represented as a 3D matrix in Python, allowing for efficient manipulation and computation of moves. The solving process is visualized using a 3D interactive model built with Three.js, styled with HTML and CSS. The goal is to provide both a mathematically grounded solution method and an intuitive, dynamic visualization of the solving steps.
 
 Group theory
 In mathemetics, groups are defined to be some set G that conforms to certain axioms after applying binary operations. These axioms include closure, associativity, identity element and inverse. In context of rubik's cube, the groups can be defined as different sides of the Rubik's cube, where each element in a group is different sides of the Rubik's cube. For instance, F would refer to the front side of the cube and rotating it in a clockwise direction. We can use prime(') notation to indicate counterclockwise movement such as F'.
+
+Future Improvements:
+- visual recognition of the cube
 
 ![notation](https://github.com/user-attachments/assets/9bf9081b-1705-4526-84d4-5728c745065b)
 
