@@ -4,13 +4,12 @@ Taehun Lee
 Peter Huang
 
 Overview
-
-
 - employ group theory to solve rubik's cube
 - convert between 3D model of cube and 3D matrix representation of it
 - use three.js, html, css to display the cube
 
 Overview
+
 This project implements a Rubik's Cube solving algorithm based on concepts from group theory. The cube is represented as a 3D matrix in Python, allowing for efficient manipulation and computation of moves. The solving process is visualized using a 3D interactive model built with Three.js, styled with HTML and CSS. The goal is to provide both a mathematically grounded solution method and an intuitive, dynamic visualization of the solving steps.
 
 Group theory
