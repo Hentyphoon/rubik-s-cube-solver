@@ -1,0 +1,50 @@
+/* Custom styles */
+body {
+    font-family: 'Inter', sans-serif; /* Default font */
+    overscroll-behavior: none; /* Prevent pull-to-refresh */
+    /* Tailwind classes handle the rest of the body styling */
+}
+
+#cube-container canvas {
+    display: block; /* Prevent extra space below canvas */
+    width: 100%;
+    height: 100%;
+}
+
+.color-swatch {
+    transition: transform 0.1s ease-in-out;
+    /* Tailwind classes handle the rest */
+}
+
+.color-swatch.selected {
+    transform: scale(1.2);
+    outline: 3px solid black;
+    outline-offset: 2px;
+}
+
+/* Basic styling for message box */
+.message-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 100;
+    display: none; /* Hidden by default */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Tailwind classes handle background/text colors */
+}
+
+.message-box.error {
+    background-color: #f87171; /* Red-400 */
+    color: #7f1d1d; /* Red-900 */
+}
+
+.message-box.success {
+    background-color: #4ade80; /* Green-400 */
+    color: #14532d; /* Green-900 */
+}
+
+/* Note: Most styling is handled by Tailwind CSS classes in the HTML.
+   This file contains only the styles that were previously in the <style> tag. */
