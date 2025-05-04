@@ -12,7 +12,7 @@ Overview
 This project implements a Rubik's Cube solving algorithm based on concepts from group theory. The cube is represented as a 3D matrix in Python, allowing for efficient manipulation and computation of moves. The solving process is visualized using a 3D interactive model built with Three.js, styled with HTML and CSS. The goal is to provide both a mathematically grounded solution method and an intuitive, dynamic visualization of the solving steps.
 
 Group theory
-In mathemetics, groups are defined to be some set G that conforms to certain axioms after applying binary operations. These axioms include closure, associativity, identity element and inverse. In context of rubik's cube, the groups can be defined as different sides of the Rubik's cube, where each element in a group is different sides of the Rubik's cube. For instance, F would refer to the front side of the cube and rotating it in a clockwise direction. We can use prime(') notation to indicate counterclockwise movement such as F'.
+In mathemetics, groups are defined to be some set G that conforms to certain axioms after applying binary operations. These axioms include closure, associativity, identity element and inverse. In context of rubik's cube, the groups can be defined as different sides of the Rubik's cube, where each element in a group is different sides of the Rubik's cube. For instance, F would refer to the front side of the cube and rotating it in a clockwise direction. We can use prime(') notation to indicate counterclockwise movement such as F'. A 180 degree roation is noted by 2 following the move letter such as F2.
 
 
 Sources
@@ -20,3 +20,4 @@ https://www.youtube.com/watch?v=zkADn-9wEgc
 https://www.ucl.ac.uk/~ucahmto/0007/_book/4-1-basic-definitions.html
 https://web.mit.edu/sp.268/www/rubik.pdf
 ChatGPT
+https://www.jaapsch.net/puzzles/thistle.htm
