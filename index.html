@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rubik's Cube Solver Frontend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col md:flex-row h-screen overflow-hidden">
+
+    <div id="cube-container" class="flex-grow md:w-3/4 h-1/2 md:h-full bg-gray-200 relative">
+        <div id="loading-indicator" class="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-600 z-10">
+            Loading 3D Cube...
+        </div>
+    </div>
+
+    <div class="md:w-1/4 h-1/2 md:h-full bg-white p-4 flex flex-col space-y-4 overflow-y-auto">
+        <h1 class="text-xl font-bold text-center text-gray-700">Rubik's Cube Input</h1>
+
+        <div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-600">Select Color:</h2>
+            <div id="color-palette" class="grid grid-cols-3 gap-2">
+                </div>
+        </div>
+
+        <div class="flex flex-col space-y-2">
+             <button id="reset-button" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                Reset Cube
+            </button>
+            <button id="validate-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                Validate & Get Matrix
+            </button>
+             <button id="solve-button" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" disabled>
+                Solve (Simulated)
+            </button>
+        </div>
+
+         <div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-600">Cube Matrix (Internal):</h2>
+            <pre id="matrix-output" class="bg-gray-100 p-2 rounded text-xs h-32 overflow-auto">Matrix will appear here after validation.</pre>
+        </div>
+
+
+        <div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-600">Solution Steps:</h2>
+            <div id="solution-display" class="bg-gray-100 p-3 rounded text-center min-h-[50px] flex items-center justify-center">
+                <span class="text-gray-500">No solution yet.</span>
+            </div>
+            <div id="solution-carousel" class="flex justify-between items-center mt-2 hidden">
+                <button id="prev-step" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded disabled:opacity-50">
+                    &lt; Prev
+                </button>
+                <span id="step-counter" class="text-sm text-gray-600">Step 0 / 0</span>
+                <button id="next-step" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded disabled:opacity-50">
+                    Next &gt;
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="message-box" class="message-box"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
