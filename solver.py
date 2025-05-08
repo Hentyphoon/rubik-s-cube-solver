@@ -41,7 +41,7 @@ def apply_solution(cube, moves):
     for move in moves:
         new_cube.apply_move(move)
     return new_cube
-
+  
 def main():
     with open("cube_input.json") as f:
         cube_data = json.load(f)
