@@ -8,14 +8,14 @@ class Cube:
         pass
 
     def is_g1(self):
-        return False
+         return self.get_wrong_edge_orientations() == 0
 
     def is_g2(self):
-        return False
+        return self.get_wrong_corner_orientations() == 0
 
     def is_g3(self):
-        return False
-
+        return self.get_edge_permutation_score() == 0
+    
     def is_solved(self):
         return all(len(set(face)) == 1 for face in self.state.values())
 
