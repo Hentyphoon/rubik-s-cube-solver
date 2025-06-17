@@ -1,23 +1,22 @@
-import json
 from class_def import Cube
 
-def reduce_to_g1(cube): #edge orientation
-    allowed_moves = ['U', 'D', 'L', 'R', 'F2', 'B2']
+def reduce_to_g1(cube):
+    allowed_moves = [(f, t) for f in ['U', 'D', 'L', 'R', 'F', 'B'] for t in [1, 2, 3]]
     return search_solutions(cube, allowed_moves, lambda c: c.is_g1())
 
-def reduce_to_g2(cube): #corner orientation
-    allowed_moves = ['U', 'D', 'L2', 'R2', 'F2', 'B2']
+def reduce_to_g2(cube):
+    allowed_moves = [(f, t) for f in ['U', 'D', 'L', 'R', 'F', 'B'] for t in [1, 2, 3]]
     return search_solutions(cube, allowed_moves, lambda c: c.is_g2())
 
-def reduce_to_g3(cube): #edge permutation
-    allowed_moves = ['U2', 'D2', 'L2', 'R2', 'F2', 'B2']
+def reduce_to_g3(cube):
+    allowed_moves = [(f, t) for f in ['U', 'D', 'L', 'R', 'F', 'B'] for t in [1, 2, 3]]
     return search_solutions(cube, allowed_moves, lambda c: c.is_g3())
 
-def find_solution(cube): #final turns
-    allowed_moves = ['I']
+def find_solution(cube):
+    allowed_moves = [(f, t) for f in ['U', 'D', 'L', 'R', 'F', 'B'] for t in [1, 2, 3]]
     return search_solutions(cube, allowed_moves, lambda c: c.is_solved())
 
-def search_solutions(cube, allowed_moves, goal_check, max_depth=5):
+def search_solutions(cube, allowed_moves, goal_check, max_depth=7):
     return dfs(cube, allowed_moves, goal_check, [], max_depth)
 
 def dfs(cube, allowed_moves, goal_check, path, depth):
@@ -29,7 +28,7 @@ def dfs(cube, allowed_moves, goal_check, path, depth):
 
     for move in allowed_moves:
         next_cube = cube.copy()
-        next_cube.apply_move(move)
+        next_cube.move(move)
         result = dfs(next_cube, allowed_moves, goal_check, path + [move], depth - 1)
         if result is not None:
             return result
@@ -39,10 +38,11 @@ def dfs(cube, allowed_moves, goal_check, path, depth):
 def apply_solution(cube, moves):
     new_cube = cube.copy()
     for move in moves:
-        new_cube.apply_move(move)
+        new_cube.move(move)
     return new_cube
-  
+
 def main():
+    import json
     with open("cube_input.json") as f:
         cube_data = json.load(f)
 
@@ -59,6 +59,7 @@ def main():
     final_solution = find_solution(g3_cube)
 
     total_solution = g1_solution + g2_solution + g3_solution + final_solution
+    print("Total moves:", total_solution)
 
 if __name__ == "__main__":
     main()
