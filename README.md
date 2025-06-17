@@ -39,14 +39,14 @@ The Rubik's cube solving algorithm in this project follows human thistlethwaite 
 
 Method
 
-Users can input a cube via interactive 3D model of the cube. After the unsolved cube is recieved, each face is written into a json file, which is recived by solver.py. To ensure all edges are kept consistent and to avoid confusion, each face will be written based on the surface development of the cube.
+Users can input a cube via interactive 3D model of the cube. After the unsolved cube is recieved, each face is written into a json file, which is recived by solver.py. To ensure all edges are kept consistent and to avoid confusion, each face will be written based on the surface development of the cube. Then, the cube from json file will be deepcopied into new class Cube. Cube object has methods to check if current state of the cube is in subgroup g1,g2,g3 or solved. Each subgroup is achieved by dfs(depth-first-search) through pre-defined moves specific to each subgroup. The searching algorithm has predefined depth so solution to achieving each subgroup does not get unnecessarily long. 
 
 
 Future Improvements:
 - visual recognition of the cube
 
 ![notation](https://github.com/user-attachments/assets/9bf9081b-1705-4526-84d4-5728c745065b)
-![Example of surface development]
+![Example of surface development](https://github.com/Hentyphoon/rubik-s-cube-solver/blob/main/development.jpg)
 
 
 Sources
