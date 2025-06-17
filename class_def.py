@@ -6,6 +6,15 @@ class Cube:
 
     def apply_move(self, move):
         pass
+    
+    def get_wrong_edge_orientation(self):
+        pass
+
+    def get_wrong_corner_orientations(self):
+        pass
+
+    def get_edge_permutation_score(self):
+        pass
 
     def is_g1(self):
          return self.get_wrong_edge_orientations() == 0
