@@ -44,9 +44,9 @@ def apply_solution(cube, moves):
   
 def main():
     with open("cube_input.json") as f:
-        cube_data = json.load(f)
+        cube = json.load(f)
 
-    unsolved_cube = Cube(cube_data)
+    unsolved_cube = Cube(cube.up,cube.down,cube.left,cube.right,cube.front,cube.back)
     g1_solution = reduce_to_g1(unsolved_cube)
     g1_cube = apply_solution(unsolved_cube, g1_solution)
 

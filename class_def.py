@@ -2,8 +2,7 @@ import copy
 from math import factorial
 
 class Cube:
-    def __init__(self, dimension, up, down,left, right, front, back):
-        self.size = dimension
+    def __init__(self, up, down,left, right, front, back):
         self.up = up
         self.dwn = down
         self.lft = left
