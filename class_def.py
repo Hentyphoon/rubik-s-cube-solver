@@ -1,18 +1,190 @@
 import copy
 
 class Cube:
-    def __init__(self, state):
-        pass
+    def __init__(self, dimension, up, down,left, right, front, back):
+        self.size = dimension
+        self.up = up
+        self.dwn = down
+        self.lft = left
+        self.rght = right
+        self.frnt = front
+        self.bck = back
 
     def apply_move(self, move):
-        pass
+        if isinstance(move, tuple):
+            face, turns = move
+        else:
+            if move.endswith("2"):
+                face, turns = move[0], 2
+            else:
+                face, turns = move[0], 1
+
+        turns %= 4
+        if turns == 0:
+            return self  
+
+        for _ in range(turns):
+
+            for _ in range(turns):
+                if face == 'F':
+                    self.frnt[0], self.frnt[1], self.frnt[2], self.frnt[3], self.frnt[5], self.frnt[6], self.frnt[7], self.frnt[8] = \
+                    self.frnt[6], self.frnt[3], self.frnt[0], self.frnt[7], self.frnt[1], self.frnt[8], self.frnt[5], self.frnt[2]
+
+                    self.up[6], self.up[7], self.up[8], self.rght[0], self.rght[3], self.rght[6], self.dwn[0], self.dwn[1], self.dwn[2], self.lft[2], self.lft[5], self.lft[8] = \
+                    self.lft[8], self.lft[5], self.lft[2], self.up[6], self.up[7], self.up[8], self.rght[6], self.rght[3], self.rght[0], self.dwn[2], self.dwn[1], self.dwn[0]
+
+                elif face == 'B':
+                    self.bck[0], self.bck[1], self.bck[2], self.bck[3], self.bck[5], self.bck[6], self.bck[7], self.bck[8] = \
+                    self.bck[6], self.bck[3], self.bck[0], self.bck[7], self.bck[1], self.bck[8], self.bck[5], self.bck[2]
+
+                    self.up[0], self.up[1], self.up[2], self.lft[0], self.lft[3], self.lft[6], self.dwn[8], self.dwn[7], self.dwn[6], self.rght[2], self.rght[5], self.rght[8] = \
+                    self.rght[2], self.rght[5], self.rght[8], self.up[2], self.up[1], self.up[0], self.lft[6], self.lft[3], self.lft[0], self.dwn[6], self.dwn[7], self.dwn[8]
+
+                elif face == 'U':
+                    self.up[0], self.up[1], self.up[2], self.up[3], self.up[5], self.up[6], self.up[7], self.up[8] = \
+                    self.up[6], self.up[3], self.up[0], self.up[7], self.up[1], self.up[8], self.up[5], self.up[2]
+
+                    self.frnt[0], self.frnt[1], self.frnt[2], self.rght[0], self.rght[1], self.rght[2], self.bck[0], self.bck[1], self.bck[2], self.lft[0], self.lft[1], self.lft[2] = \
+                    self.rght[0], self.rght[1], self.rght[2], self.bck[0], self.bck[1], self.bck[2], self.lft[0], self.lft[1], self.lft[2], self.frnt[0], self.frnt[1], self.frnt[2]
+
+                elif face == 'D':
+                    self.dwn[0], self.dwn[1], self.dwn[2], self.dwn[3], self.dwn[5], self.dwn[6], self.dwn[7], self.dwn[8] = \
+                    self.dwn[6], self.dwn[3], self.dwn[0], self.dwn[7], self.dwn[1], self.dwn[8], self.dwn[5], self.dwn[2]
+
+                    self.frnt[6], self.frnt[7], self.frnt[8], self.lft[6], self.lft[7], self.lft[8], self.bck[6], self.bck[7], self.bck[8], self.rght[6], self.rght[7], self.rght[8] = \
+                    self.lft[6], self.lft[7], self.lft[8], self.bck[6], self.bck[7], self.bck[8], self.rght[6], self.rght[7], self.rght[8], self.frnt[6], self.frnt[7], self.frnt[8]
+
+                elif face == 'L':
+                    self.lft[0], self.lft[1], self.lft[2], self.lft[3], self.lft[5], self.lft[6], self.lft[7], self.lft[8] = \
+                    self.lft[6], self.lft[3], self.lft[0], self.lft[7], self.lft[1], self.lft[8], self.lft[5], self.lft[2]
+
+                    self.up[0], self.up[3], self.up[6], self.frnt[0], self.frnt[3], self.frnt[6], self.dwn[0], self.dwn[3], self.dwn[6], self.bck[8], self.bck[5], self.bck[2] = \
+                    self.bck[8], self.bck[5], self.bck[2], self.up[0], self.up[3], self.up[6], self.frnt[0], self.frnt[3], self.frnt[6], self.dwn[0], self.dwn[3], self.dwn[6]
+
+                elif face == 'R':
+                    self.rght[0], self.rght[1], self.rght[2], self.rght[3], self.rght[5], self.rght[6], self.rght[7], self.rght[8] = \
+                    self.rght[6], self.rght[3], self.rght[0], self.rght[7], self.rght[1], self.rght[8], self.rght[5], self.rght[2]
+
+                    self.up[2], self.up[5], self.up[8], self.bck[6], self.bck[3], self.bck[0], self.dwn[2], self.dwn[5], self.dwn[8], self.frnt[2], self.frnt[5], self.frnt[8] = \
+                    self.frnt[2], self.frnt[5], self.frnt[8], self.up[2], self.up[5], self.up[8], self.bck[6], self.bck[3], self.bck[0], self.dwn[2], self.dwn[5], self.dwn[8]
+
+            self.moves_made.append((face, turns))
+        return self
+
+    def get_sticker(self, face, idx):
+        face_map = {
+            'T': self.up,
+            'D': self.dwn,
+            'F': self.frnt,
+            'B': self.bck,
+            'L': self.lft,
+            'R': self.rght
+        }
+        return face_map[face][idx]
 
     def is_g1(self):
-        return self._edges_oriented()
+        centers = {
+            'T': self.up[4],
+            'D': self.dwn[4],
+            'F': self.frnt[4],
+            'B': self.bck[4],
+            'L': self.lft[4],
+            'R': self.rght[4]
+        }
+
+        edges = [
+            ('T', 1, 'B', 7),
+            ('T', 5, 'R', 1),
+            ('T', 3, 'L', 1),
+            ('D', 7, 'B', 1),
+            ('D', 5, 'R', 7),
+            ('D', 3, 'L', 7),
+            ('T', 7, 'F', 1),
+            ('D', 1, 'F', 7),
+            ('F', 5, 'R', 3),
+            ('F', 3, 'L', 5),
+            ('B', 3, 'R', 5),
+            ('B', 5, 'L', 3)
+        ]
+
+        for f1, i1, f2, i2 in edges:
+            c1 = self.get_sticker(f1, i1)
+            c2 = self.get_sticker(f2, i2)
+
+            if f1 in ['T', 'D']:
+                if c1 != centers[f1]:
+                    return False
+            elif f2 in ['T', 'D']:
+                if c2 != centers[f2]:
+                    return False
+            else:
+                if c1 != centers[f1]:
+                    return False
+
+        return True
+
+
 
     def is_g2(self):
-        return self._edges_oriented() and self._corners_oriented() and self._edges_in_slice()
+        return self.is_g1() and self._corners_oriented() and self._edges_in_slice()
 
     def is_g3(self):
         return self.is_g2() and self._parity_even() and self._pieces_in_slice()
+
+    def is_solved(self):
+        faces = ['t', 'dwn', 'frnt', 'bck', 'lft', 'rght']
+
+        for face_name in faces:
+            face = getattr(self, face_name)
+            center_color = face[4]
+            if any(sticker != center_color for sticker in face):
+                return False
+        return True
+
+    def _corners_oriented(self):
+        centers = {
+            'up': self.up[4],
+            'dwn': self.dwn[4],
+            'frnt': self.frnt[4],
+            'bck': self.bck[4],
+            'lft': self.lft[4],
+            'rght': self.rght[4]
+        }
+
+        corners = [
+            ('up', 8),
+            ('up', 2),
+            ('up', 0),
+            ('up', 6),
+            ('dwn', 2),
+            ('dwn', 8),
+            ('dwn', 6),
+            ('dwn', 0),
+        ]
+
+        for face, idx in corners:
+            if getattr(self, face)[idx] != centers[face]:
+                return False
+        return True
+    def _edges_in_slice(self):
+        centers = {
+            'frnt': self.frnt[4],
+            'bck': self.bck[4],
+            'lft': self.lft[4],
+            'rght': self.rght[4]
+        }
+
+        edges = [
+            ('frnt', 5, 'rght', 3),
+            ('frnt', 3, 'lft', 5),
+            ('bck', 3, 'rght', 5),
+            ('bck', 5, 'lft', 3)
+        ]
+
+        for f1, i1, f2, i2 in edges:
+            c1 = getattr(self, f1)[i1]
+            c2 = getattr(self, f2)[i2]
+            if c1 != centers[f1] or c2 != centers[f2]:
+                return False
+        return True
 
