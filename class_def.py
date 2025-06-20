@@ -1,4 +1,5 @@
 import copy
+from math import factorial
 
 class Cube:
     def __init__(self, dimension, up, down,left, right, front, back):
@@ -166,6 +167,7 @@ class Cube:
             if getattr(self, face)[idx] != centers[face]:
                 return False
         return True
+    
     def _edges_in_slice(self):
         centers = {
             'frnt': self.frnt[4],
@@ -188,3 +190,197 @@ class Cube:
                 return False
         return True
 
+    def _sorted_tuple(*args):
+        return tuple(sorted(args))
+
+    def _permutation_parity(perm):
+        # Count parity by number of swaps to sort
+        arr = list(perm)
+        parity = 0
+        for i in range(len(arr)):
+            while arr[i] != i:
+                j = arr[i]
+                arr[i], arr[j] = arr[j], arr[i]
+                parity ^= 1
+        return parity == 0  # True if even parity
+
+    def _corner_pieces(self):
+        # corners order as in your cube:
+        corners_positions = [
+            [('up', 8), ('frnt', 2), ('rght', 0)],  # UFR
+            [('up', 2), ('rght', 2), ('bck', 0)],   # URB
+            [('up', 0), ('bck', 2), ('lft', 0)],    # UBL
+            [('up', 6), ('lft', 2), ('frnt', 0)],   # ULF
+            [('dwn', 2), ('frnt', 8), ('rght', 6)], # DFR
+            [('dwn', 8), ('rght', 8), ('bck', 6)],  # DRB
+            [('dwn', 6), ('bck', 8), ('lft', 6)],   # DBL
+            [('dwn', 0), ('lft', 8), ('frnt', 6)],  # DLF
+        ]
+
+        pieces = []
+        for pos in corners_positions:
+            stickers = [getattr(self, face)[idx] for face, idx in pos]
+            pieces.append(_sorted_tuple(*stickers))
+        return pieces
+
+    def _edge_pieces(self):
+        edges_positions = [
+            [('up', 1), ('bck', 7)],    # UB
+            [('up', 5), ('rght', 1)],   # UR
+            [('up', 3), ('lft', 1)],    # UL
+            [('dwn', 7), ('bck', 1)],   # DB
+            [('dwn', 5), ('rght', 7)],  # DR
+            [('dwn', 3), ('lft', 7)],   # DL
+            [('up', 7), ('frnt', 1)],   # UF
+            [('dwn', 1), ('frnt', 7)],  # DF
+            [('frnt', 5), ('rght', 3)], # FR (middle slice)
+            [('frnt', 3), ('lft', 5)],  # FL (middle slice)
+            [('bck', 3), ('rght', 5)],  # BR (middle slice)
+            [('bck', 5), ('lft', 3)],   # BL (middle slice)
+        ]
+
+        pieces = []
+        for pos in edges_positions:
+            stickers = [getattr(self, face)[idx] for face, idx in pos]
+            pieces.append(_sorted_tuple(*stickers))
+        return pieces
+
+    def _parity_even(self):
+        # Define solved order once — colors from solved cube
+        # (Replace these with your solved cube colors!)
+        solved_corners = sorted([
+            ('W', 'R', 'B'),  # UFR example (replace letters accordingly)
+            ('W', 'B', 'O'),
+            ('W', 'O', 'G'),
+            ('W', 'G', 'R'),
+            ('Y', 'R', 'G'),
+            ('Y', 'G', 'O'),
+            ('Y', 'O', 'B'),
+            ('Y', 'B', 'R'),
+        ])
+        solved_edges = sorted([
+            ('W', 'B'),
+            ('W', 'R'),
+            ('W', 'O'),
+            ('Y', 'B'),
+            ('Y', 'R'),
+            ('Y', 'O'),
+            ('W', 'G'),
+            ('Y', 'G'),
+            ('R', 'G'),
+            ('G', 'O'),
+            ('B', 'R'),
+            ('B', 'O'),
+        ])
+
+        current_corners = self._corner_pieces()
+        current_edges = self._edge_pieces()
+
+        # Create mapping from piece to index in solved
+        corner_indices = [solved_corners.index(c) for c in current_corners]
+        edge_indices = [solved_edges.index(e) for e in current_edges]
+
+        corner_parity = _permutation_parity(corner_indices)
+        edge_parity = _permutation_parity(edge_indices)
+
+        return corner_parity == edge_parity  # parity must match
+
+    def _pieces_in_slice(self):
+    centers = {
+        'up': self.up[4],
+        'dwn': self.dwn[4],
+        'frnt': self.frnt[4],
+        'bck': self.bck[4],
+        'lft': self.lft[4],
+        'rght': self.rght[4]
+    }
+
+    # Define slices by allowed pieces (as sets of sorted color tuples)
+    # You must replace these with your solved cube colors!
+
+    # Edges by slice
+    edges_U_D = {
+        _sorted_tuple(centers['up'], centers['bck']),  # UB
+        _sorted_tuple(centers['up'], centers['rght']), # UR
+        _sorted_tuple(centers['up'], centers['lft']),  # UL
+        _sorted_tuple(centers['dwn'], centers['bck']), # DB
+        _sorted_tuple(centers['dwn'], centers['rght']),# DR
+        _sorted_tuple(centers['dwn'], centers['lft']), # DL
+        _sorted_tuple(centers['up'], centers['frnt']), # UF
+        _sorted_tuple(centers['dwn'], centers['frnt'])  # DF
+    }
+
+    edges_M = {
+        _sorted_tuple(centers['frnt'], centers['rght']), # FR
+        _sorted_tuple(centers['frnt'], centers['lft']),  # FL
+        _sorted_tuple(centers['bck'], centers['rght']),  # BR
+        _sorted_tuple(centers['bck'], centers['lft'])    # BL
+    }
+
+    # Corners by slice
+    corners_U = {
+        _sorted_tuple(centers['up'], centers['frnt'], centers['rght']),  # UFR
+        _sorted_tuple(centers['up'], centers['rght'], centers['bck']),   # URB
+        _sorted_tuple(centers['up'], centers['bck'], centers['lft']),    # UBL
+        _sorted_tuple(centers['up'], centers['lft'], centers['frnt'])    # ULF
+    }
+
+    corners_D = {
+        _sorted_tuple(centers['dwn'], centers['frnt'], centers['rght']), # DFR
+        _sorted_tuple(centers['dwn'], centers['rght'], centers['bck']),  # DRB
+        _sorted_tuple(centers['dwn'], centers['bck'], centers['lft']),   # DBL
+        _sorted_tuple(centers['dwn'], centers['lft'], centers['frnt'])   # DLF
+    }
+
+    # Positions for edges (face, idx pairs)
+    edges_positions = [
+        ('up', 1, 'bck', 7),   # UB
+        ('up', 5, 'rght', 1),  # UR
+        ('up', 3, 'lft', 1),   # UL
+        ('dwn', 7, 'bck', 1),  # DB
+        ('dwn', 5, 'rght', 7), # DR
+        ('dwn', 3, 'lft', 7),  # DL
+        ('up', 7, 'frnt', 1),  # UF
+        ('dwn', 1, 'frnt', 7), # DF
+        ('frnt', 5, 'rght', 3),# FR
+        ('frnt', 3, 'lft', 5), # FL
+        ('bck', 3, 'rght', 5), # BR
+        ('bck', 5, 'lft', 3)   # BL
+    ]
+
+    # Positions for corners (face, idx triples)
+    corners_positions = [
+        ('up', 8, 'frnt', 2, 'rght', 0),  # UFR
+        ('up', 2, 'rght', 2, 'bck', 0),   # URB
+        ('up', 0, 'bck', 2, 'lft', 0),    # UBL
+        ('up', 6, 'lft', 2, 'frnt', 0),   # ULF
+        ('dwn', 2, 'frnt', 8, 'rght', 6), # DFR
+        ('dwn', 8, 'rght', 8, 'bck', 6),  # DRB
+        ('dwn', 6, 'bck', 8, 'lft', 6),   # DBL
+        ('dwn', 0, 'lft', 8, 'frnt', 6)   # DLF
+    ]
+
+    # Check edges
+    for f1, i1, f2, i2 in edges_positions:
+        stickers = _sorted_tuple(getattr(self, f1)[i1], getattr(self, f2)[i2])
+        # Determine slice by position
+        if f1 in ['up', 'dwn'] or f2 in ['up', 'dwn']:
+            if stickers not in edges_U_D:
+                return False
+        else:
+            # M slice edges
+            if stickers not in edges_M:
+                return False
+
+    # Check corners
+    for f1, i1, f2, i2, f3, i3 in corners_positions:
+        stickers = _sorted_tuple(getattr(self, f1)[i1], getattr(self, f2)[i2], getattr(self, f3)[i3])
+        if f1 == 'up':
+            if stickers not in corners_U:
+                return False
+        else:
+            # f1 == 'dwn'
+            if stickers not in corners_D:
+                return False
+
+    return True
